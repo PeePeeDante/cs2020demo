@@ -31,7 +31,7 @@ def evaluateSearch(): # cannot have same method name
 
     # [{"searchItemName":"Samsung Aircon","searchResult":["-Samsung+h Aircon","Samsung+a Air-con","S-ams-ung Au-r-con"]}]
         count = 0
-        while(cost_list!=[] and count<=10):
+        while(cost_list!=[] and count<10):
             min_cost = min(cost_list)
             temp = {}
             while (min_cost in cost_list):
@@ -47,7 +47,7 @@ def evaluateSearch(): # cannot have same method name
             for key in temp:
                 answer[i]["searchResult"].append(key)
                 count += 1
-                if (count == 10):
+                if (count >= 10):
                     break
             
     logging.info("My result: {}".format(answer))
