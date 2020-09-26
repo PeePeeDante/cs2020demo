@@ -38,7 +38,7 @@ def evaluateSearch(): # cannot have same method name
             oper_list.pop(m_index)
 
     logging.info("My result: {}".format(answer))
-    return str(answer)
+    return json.dumps(answer)
 
 def getOperations(key, search_wd):
 
