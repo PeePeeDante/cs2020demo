@@ -4,4 +4,5 @@ import codeitsuisse.routes.square
 import codeitsuisse.routes.salad
 import codeitsuisse.routes.clean
 import codeitsuisse.routes.inventory
+import codeitsuisse.routes.cluster
 

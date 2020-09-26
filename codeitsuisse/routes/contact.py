@@ -7,71 +7,85 @@ from codeitsuisse import app;
 
 logger = logging.getLogger(__name__)
 
-@app.route('/salad-spree', methods=['POST'])
-def evaluateSalad(): # cannot have same method name 
+@app.route('/contact_trace', methods=['POST'])
+def evaluateTrace(): # cannot have same method name 
     data = request.get_json()
     logging.info("data sent for evaluation {}".format(data))
     #inputValue = data.get("input");
 
-    minCost = 101
-    for street in data["salad_prices_street_map"]:
-        temp_minCost = minCostStreet(data["number_of_salads"], street)
-        if (temp_minCost < minCost):
-            minCost = temp_minCost
+    infect_n = data["infected"]["name"]
+    infect_g = data["infected"]["genome"]
 
-    if (minCost == 101):
-        minCost = 0
+    paths = []
 
-    logging.info("My result: {}".format(minCost))
-    return jsonify(result=minCost)
+    child_list = []
+    child_list.append(data["origin"])
+    for clu in data["cluster"]:
+        child_list.append(clu)
 
-def minCostStreet(n, street):
+    paths += back_track(data["infected"], child_list)
+
+    logging.info("My result: {}".format(paths))
+    return paths
+
+def addToPath():
     
-    street_size = len(street)
+
+def back_track(parent, child_list, cum_path):
+    path = []
+
+    if (child_list==[]):
+        
+
+    m_index = []
+    d_list = []
+    sil_list = []
+    for i in range(len(child_list)):
+        d, s = difference(child_list[i])
+        d_list.append(d)
+        sil_list.append(s)
+
+    min_diff = min(d_list)
+
+    # find index of possible trace routes
+    while min_diff in d_list:
+        m_index.append(d_list.index(min_diff))
+        d_list[d_list.index(min_diff)]+=1
     
-    i=0
-    j=i
-    cost = 101
-    while (j < street_size):
+    for index in m_index:
+        # origin
+        if (index == 0):
+            path.append(cum_path)
+            return += pat
+            path = path_list.append([child_list[index],sil_list[index]])
+            continue
 
-        if (street[j]!="X" and j!=street_size-1):
-            j+=1
-        else:
-            if (street[j] != "X" and j==street_size-1):
-                j+=1
+        p = child_list[index]
+        temp = child_list
+        temp.pop(index)
+        path_list.append([child_list[index], sil_list[index]])
+        path += back_track(p,temp,path_list)
 
-            if (i==j):
-                i+=1
-                j+=1
-                continue
-            
-            temp_cost = minSubarray(i,j-1,n,street)
-            if (temp_cost < cost):
-                cost = temp_cost
-            j+=1
-            i=j
+    return path
 
-    return cost
+def difference(g1,g2):
+    score = 0
+    head_count = 0
+    silent = 1
 
-def minSubarray(start,end,n,street):
-    
-    if (n > end-start+1):
-        return 101
+    for i in range(len(g1)):
+        if (g1[i]!=g2[i]):
+            score += 1
+            if (i%3==0):
+                head_count+=1
 
-    res = 0
-    for i in range(n):
-        res += int(street[start+i])
+    if (head_count>1):
+        silent = 0
 
-    # Compute sums of remaining windows by
-    # removing first element of previous
-    # window and adding last element of
-    # current window.
-    curr_sum = res
-    for i in range(start+n, end+1):
-        curr_sum += int(street[i]) - int(street[i-n])
-        res = min(res, curr_sum)
+    return score, silent
 
-    return res
+        
+
 
 
 
