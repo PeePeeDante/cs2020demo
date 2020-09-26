@@ -13,7 +13,7 @@ def evaluateClean(): # cannot have same method name
     logging.info("data sent for evaluation {}".format(data))
     #inputValue = data.get("input");
 
-    result = {"answer":{}}
+    result = {"answers":{}}
 
     for test_case in data["tests"]:
         s = stepsRequired(data["tests"][test_case]["floor"])
