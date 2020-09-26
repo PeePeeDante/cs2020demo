@@ -15,25 +15,27 @@ def evaluateSearch(): # cannot have same method name
     logging.info("data sent for evaluation {}".format(data))
     #inputValue = data.get("input");
 
-    search_wd = data[0]["searchItemName"]
-    key_list = data[0]["items"]
-    oper_list = []
-    cost_list = []
+    answer = []
 
-    for key in key_list:
-        oper, cost = getOperations(key, search_wd)
-        oper_list += oper
-        cost_list += cost
+    for i in range(len(data)):
+        search_wd = data[i]["searchItemName"]
+        key_list = data[i]["items"]
+        oper_list = []
+        cost_list = []
+        answer.append({"searchItemName": search_wd, "searchResult": []})
+
+        for key in key_list:
+            oper, cost = getOperations(key, search_wd)
+            oper_list += oper
+            cost_list += cost
 
     # [{"searchItemName":"Samsung Aircon","searchResult":["-Samsung+h Aircon","Samsung+a Air-con","S-ams-ung Au-r-con"]}]
 
-    answer = [{"searchItemName":search_wd,"searchResult":[]}]
-
-    while(cost_list!=[]):
-        m_index = cost_list.index(min(cost_list))
-        answer[0]["searchResult"].append(oper_list[m_index])
-        cost_list.pop(m_index)
-        oper_list.pop(m_index)
+        while(cost_list!=[]):
+            m_index = cost_list.index(min(cost_list))
+            answer[i]["searchResult"].append(oper_list[m_index])
+            cost_list.pop(m_index)
+            oper_list.pop(m_index)
 
     logging.info("My result: {}".format(answer))
     return str(answer)
